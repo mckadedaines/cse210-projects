@@ -53,7 +53,11 @@ public class Journal
         string filename = Console.ReadLine();
         entries.Clear();
         using StreamReader reader = new StreamReader(filename);
-        using CsvReader csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            PrepareHeaderForMatch = args => args.Header.ToLower()
+        };
+        using CsvReader csv = new CsvReader(reader, config);
         entries = csv.GetRecords<Entry>().ToList();
     }
 }

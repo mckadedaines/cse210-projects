@@ -1,8 +1,16 @@
+using CsvHelper.Configuration.Attributes;
+
 public class Entry
 {
+    [Name("Date")]
     public string Date { get; set; }
+
+    [Name("Prompt")]
     public string Prompt { get; set; }
+
+    [Name("Response")]
     public string Response { get; set; }
+
 
     public Entry(string date, string prompt, string response)
     {
