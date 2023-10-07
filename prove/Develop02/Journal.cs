@@ -1,7 +1,3 @@
-using CsvHelper;
-using CsvHelper.Configuration;
-using System.Globalization;
-
 public class Journal
 {
     private List<Entry> entries;
@@ -39,9 +35,13 @@ public class Journal
     {
         Console.WriteLine("Enter filename:");
         string filename = Console.ReadLine();
+
         using StreamWriter writer = new StreamWriter(filename);
-        using CsvWriter csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture));
-        csv.WriteRecords(entries);
+        writer.WriteLine("Date,Prompt,Response"); // Writing the header
+        foreach (var entry in entries)
+        {
+            writer.WriteLine(entry.ToCSV());
+        }
     }
 
     public void LoadFromFile()
@@ -49,12 +49,16 @@ public class Journal
         Console.WriteLine("Enter filename:");
         string filename = Console.ReadLine();
         entries.Clear();
+
         using StreamReader reader = new StreamReader(filename);
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        reader.ReadLine(); // Skipping the header line
+        while (!reader.EndOfStream)
         {
-            PrepareHeaderForMatch = args => args.Header.ToLower()
-        };
-        using CsvReader csv = new CsvReader(reader, config);
-        entries = csv.GetRecords<Entry>().ToList();
+            var line = reader.ReadLine();
+            var values = line.Split(',');
+
+            var entry = new Entry(values[0], values[1], values[2]);
+            entries.Add(entry);
+        }
     }
 }
