@@ -2,8 +2,9 @@ using System;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        Console.WriteLine("Hello Develop04 World!");
+        MenuSystem menu = new MenuSystem();
+        menu.DisplayMenu();
     }
 }
