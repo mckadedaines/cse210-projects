@@ -1,0 +1,4 @@
+Points earned: 110
+SimpleGoal:Simple Test|Simple test|10
+EternalGoal:Eterenal Test|Eternal Test|100
+ChecklistGoal:List Test|List Test|100|3|1|500
